@@ -1,10 +1,8 @@
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuthStore } from '@/store/auth-store'
-import { useNotificationStore } from '@/store/notification-store'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,7 +10,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Globe, Bell, ChevronDown, LogOut, Users, Headset, UserCog, Shield } from 'lucide-react'
+import { Globe, ChevronDown, LogOut, Users, Headset, UserCog, Shield } from 'lucide-react'
+import { NotificationPanel } from './NotificationPanel'
+import { EventSimulator } from './EventSimulator'
 import type { Role } from '@/types/common'
 
 const roleIcons: Record<Role, typeof Users> = {
@@ -40,8 +40,6 @@ export function Header() {
   const switchLanguage = useAuthStore((s) => s.switchLanguage)
   const switchRole = useAuthStore((s) => s.switchRole)
   const logout = useAuthStore((s) => s.logout)
-  const unreadCount = useNotificationStore((s) => s.unreadCount)
-
   const RoleIcon = roleIcons[currentRole]
 
   const handleSwitchRole = (role: Role) => {
@@ -71,18 +69,11 @@ export function Header() {
           {language === 'en' ? '中文' : 'EN'}
         </Button>
 
+        {/* Event Simulator */}
+        <EventSimulator />
+
         {/* Notifications */}
-        <Button variant="ghost" size="icon" className="relative">
-          <Bell className="h-4 w-4" />
-          {unreadCount > 0 && (
-            <Badge
-              variant="destructive"
-              className="absolute -top-1 -right-1 h-5 min-w-5 px-1 text-[10px] flex items-center justify-center"
-            >
-              {unreadCount}
-            </Badge>
-          )}
-        </Button>
+        <NotificationPanel />
 
         {/* Role switcher */}
         <DropdownMenu>
