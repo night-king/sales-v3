@@ -119,7 +119,7 @@ export function DataTable<TData>({
               <SelectTrigger className="w-40">
                 <SelectValue placeholder={filter.label} />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent position="popper" className="max-h-60">
                 <SelectItem value="_all">{filter.label}</SelectItem>
                 {filter.options.map((opt) => (
                   <SelectItem key={opt.value} value={opt.value}>
