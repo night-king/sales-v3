@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next'
 import { useClientStore } from '@/store/client-store'
 import { useTaskStore } from '@/store/task-store'
 import { useTicketStore } from '@/store/ticket-store'
+import { useRole } from '@/hooks/use-role'
+import { maskPhone, maskEmail, shouldMask } from '@/lib/mask'
 import { mockUsers } from '@/data/users'
 import { StatusBadge } from '@/components/common/StatusBadge'
 import { Button } from '@/components/ui/button'
@@ -17,7 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, Eye } from 'lucide-react'
 
 const STATUS_TRANSITIONS: Record<string, string[]> = {
   lead: ['registered'],
@@ -35,11 +37,13 @@ export default function ClientDetailPage() {
   const isZh = i18n.language === 'zh'
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
+  const { currentRole, currentUser } = useRole()
   const clients = useClientStore((s) => s.clients)
   const updateClientStatus = useClientStore((s) => s.updateClientStatus)
   const tasks = useTaskStore((s) => s.tasks)
   const tickets = useTicketStore((s) => s.tickets)
   const [selectedStatus, setSelectedStatus] = useState<string>('')
+  const [revealedFields, setRevealedFields] = useState<Set<string>>(new Set())
 
   const client = clients.find((c) => c.id === id)
 
@@ -79,8 +83,26 @@ export default function ClientDetailPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <InfoItem label={t('table.country')} value={client.country} />
             <InfoItem label={t('table.language')} value={client.language} />
-            <InfoItem label={t('table.phone')} value={client.phone} />
-            <InfoItem label={t('table.email')} value={client.email} />
+            <MaskedInfoItem
+              label={t('table.phone')}
+              value={client.phone}
+              maskedValue={maskPhone(client.phone)}
+              isMasked={shouldMask(currentRole, client.assignedTo, currentUser?.id)}
+              revealed={revealedFields.has('phone')}
+              onReveal={() => setRevealedFields((prev) => new Set(prev).add('phone'))}
+              revealLabel={t('actions.viewFull')}
+              canReveal={currentRole === 'support'}
+            />
+            <MaskedInfoItem
+              label={t('table.email')}
+              value={client.email}
+              maskedValue={maskEmail(client.email)}
+              isMasked={shouldMask(currentRole, client.assignedTo, currentUser?.id)}
+              revealed={revealedFields.has('email')}
+              onReveal={() => setRevealedFields((prev) => new Set(prev).add('email'))}
+              revealLabel={t('actions.viewFull')}
+              canReveal={currentRole === 'support'}
+            />
             <InfoItem label={t('table.balance')} value={`$${client.walletBalance.toLocaleString()}`} />
             <InfoItem label={t('table.assignedTo')} value={assignedUser?.name ?? '-'} />
             <InfoItem label={t('table.createdAt')} value={new Date(client.createdAt).toLocaleDateString()} />
@@ -263,6 +285,45 @@ function InfoItem({ label, value }: { label: string; value: string }) {
     <div>
       <p className="text-sm text-muted-foreground">{label}</p>
       <p className="text-sm font-medium">{value}</p>
+    </div>
+  )
+}
+
+function MaskedInfoItem({
+  label,
+  value,
+  maskedValue,
+  isMasked,
+  revealed,
+  onReveal,
+  revealLabel,
+  canReveal,
+}: {
+  label: string
+  value: string
+  maskedValue: string
+  isMasked: boolean
+  revealed: boolean
+  onReveal: () => void
+  revealLabel: string
+  canReveal: boolean
+}) {
+  const showFull = !isMasked || revealed
+  return (
+    <div>
+      <p className="text-sm text-muted-foreground">{label}</p>
+      <div className="flex items-center gap-2">
+        <p className="text-sm font-medium">{showFull ? value : maskedValue}</p>
+        {isMasked && !revealed && canReveal && (
+          <button
+            onClick={onReveal}
+            className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+          >
+            <Eye className="h-3 w-3" />
+            {revealLabel}
+          </button>
+        )}
+      </div>
     </div>
   )
 }

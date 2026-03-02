@@ -5,19 +5,10 @@ import { DataTable, type FilterConfig } from '@/components/data-table/DataTable'
 import { StatusBadge } from '@/components/common/StatusBadge'
 import { CLIENT_STATUSES } from '@/lib/constants'
 import { mockUsers } from '@/data/users'
+import { maskPhone, maskEmail, shouldMask } from '@/lib/mask'
+import { useRole } from '@/hooks/use-role'
 import type { ColumnDef } from '@tanstack/react-table'
 import type { Client } from '@/types/client'
-
-function maskPhone(phone: string): string {
-  if (phone.length < 7) return phone
-  return phone.slice(0, 3) + '****' + phone.slice(-4)
-}
-
-function maskEmail(email: string): string {
-  const atIndex = email.indexOf('@')
-  if (atIndex < 1) return email
-  return email[0] + '***' + email.slice(atIndex)
-}
 
 interface ClientTableProps {
   data: Client[]
@@ -28,6 +19,7 @@ interface ClientTableProps {
 export function ClientTable({ data, actions, onRowClick }: ClientTableProps) {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
+  const { currentRole, currentUser } = useRole()
 
   // Extract unique countries from client data for filter options
   const countryOptions = Array.from(new Set(data.map((c) => c.country)))
@@ -75,12 +67,18 @@ export function ClientTable({ data, actions, onRowClick }: ClientTableProps) {
     {
       accessorKey: 'phone',
       header: t('table.phone'),
-      cell: ({ row }) => <span>{maskPhone(row.original.phone)}</span>,
+      cell: ({ row }) => {
+        const masked = shouldMask(currentRole, row.original.assignedTo, currentUser?.id)
+        return <span>{masked ? maskPhone(row.original.phone) : row.original.phone}</span>
+      },
     },
     {
       accessorKey: 'email',
       header: t('table.email'),
-      cell: ({ row }) => <span>{maskEmail(row.original.email)}</span>,
+      cell: ({ row }) => {
+        const masked = shouldMask(currentRole, row.original.assignedTo, currentUser?.id)
+        return <span>{masked ? maskEmail(row.original.email) : row.original.email}</span>
+      },
     },
     {
       accessorKey: 'status',
