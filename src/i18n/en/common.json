@@ -51,6 +51,8 @@
     "resubmit": "Resubmit",
     "switchRole": "Switch Role",
     "logout": "Logout",
+    "collapse": "Collapse",
+    "expand": "Expand",
     "login": "Login",
     "send": "Send"
   },
@@ -183,6 +185,8 @@
   "login": {
     "title": "Sales Management System",
     "subtitle": "Select a role to enter the demo",
+    "selectRole": "Select a role to enter the demo",
+    "demoHint": "This is a frontend demo — click any role to explore",
     "enterAs": "Enter as {{role}}"
   },
   "language": {

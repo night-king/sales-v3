@@ -51,6 +51,8 @@
     "resubmit": "重新提交",
     "switchRole": "切换角色",
     "logout": "退出",
+    "collapse": "收起",
+    "expand": "展开",
     "login": "登录",
     "send": "发送"
   },
@@ -183,6 +185,8 @@
   "login": {
     "title": "客户销售管理系统",
     "subtitle": "选择角色进入演示",
+    "selectRole": "选择角色进入演示",
+    "demoHint": "这是前端演示程序 — 点击任意角色即可体验",
     "enterAs": "以 {{role}} 身份进入"
   },
   "language": {
