@@ -254,5 +254,25 @@
     "systemHealth": "System Health",
     "healthy": "Healthy",
     "deadLetterQueue": "Dead Letter Queue"
+  },
+  "workflow": {
+    "eventSimulator": "CRM Event Simulator",
+    "selectClient": "Select Client",
+    "eventType": "Event Type",
+    "fireEvent": "Fire Event",
+    "eventFired": "Event Fired!",
+    "eventFiredHint": "Workflow triggered. Check notifications and task list.",
+    "simulateStatus": "Simulate Status Change",
+    "applyStatus": "Apply",
+    "simulateExpiration": "Simulate Expiration",
+    "automationRules": "Rules",
+    "executionLog": "Execution Log",
+    "noExecutions": "No executions yet. Fire a CRM event to trigger automation rules.",
+    "ruleName": "Rule Name",
+    "event": "Event",
+    "result": "Result",
+    "success": "Success",
+    "skipped": "Skipped",
+    "timestamp": "Timestamp"
   }
 }

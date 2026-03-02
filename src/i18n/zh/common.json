@@ -254,5 +254,25 @@
     "systemHealth": "系统健康",
     "healthy": "正常",
     "deadLetterQueue": "死信队列"
+  },
+  "workflow": {
+    "eventSimulator": "CRM 事件模拟器",
+    "selectClient": "选择客户",
+    "eventType": "事件类型",
+    "fireEvent": "触发事件",
+    "eventFired": "事件已触发!",
+    "eventFiredHint": "工作流已触发，请检查通知和任务列表。",
+    "simulateStatus": "模拟状态变更",
+    "applyStatus": "应用",
+    "simulateExpiration": "模拟到期",
+    "automationRules": "规则",
+    "executionLog": "执行日志",
+    "noExecutions": "暂无执行记录。触发CRM事件以执行自动化规则。",
+    "ruleName": "规则名称",
+    "event": "事件",
+    "result": "结果",
+    "success": "成功",
+    "skipped": "跳过",
+    "timestamp": "时间"
   }
 }
