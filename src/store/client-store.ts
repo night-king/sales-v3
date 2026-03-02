@@ -18,7 +18,7 @@ export const useClientStore = create<ClientState>((set, get) => ({
   claimClient: (clientId, userId) => {
     set((state) => ({
       clients: state.clients.map((c) =>
-        c.id === clientId ? { ...c, assignedTo: userId } : c
+        c.id === clientId ? { ...c, assignedTo: userId, status: 'registered' as ClientStatus } : c
       ),
     }))
     eventBus.emit('client.claimed', { clientId, userId })

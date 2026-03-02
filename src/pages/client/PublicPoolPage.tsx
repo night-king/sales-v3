@@ -29,7 +29,7 @@ export default function PublicPoolPage() {
   const [formPhone, setFormPhone] = useState('')
   const [formEmail, setFormEmail] = useState('')
 
-  const leadClients = clients.filter((c) => c.status === 'lead')
+  const leadClients = clients.filter((c) => c.status === 'lead' && !c.assignedTo)
 
   const handleClaim = (clientId: string) => {
     if (currentUser) {
