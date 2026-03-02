@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import type { IBDeal, IBDealStatus, ApprovalHistoryEntry } from '@/types/ib-deal'
 import { mockIBDeals } from '@/data/ib-deals'
+import { eventBus } from '@/lib/event-bus'
 
 interface IBState {
   ibDeals: IBDeal[]
@@ -8,15 +9,18 @@ interface IBState {
   approveIBDeal: (dealId: string, actor: string) => void
   rejectIBDeal: (dealId: string, actor: string, reason: string) => void
   resubmitIBDeal: (dealId: string, updates: Partial<IBDeal>) => void
+  expireIBDeal: (dealId: string) => void
 }
 
-export const useIBStore = create<IBState>((set) => ({
+export const useIBStore = create<IBState>((set, _get) => ({
   ibDeals: [...mockIBDeals],
 
-  createIBDeal: (deal) =>
-    set((state) => ({ ibDeals: [deal, ...state.ibDeals] })),
+  createIBDeal: (deal) => {
+    set((state) => ({ ibDeals: [deal, ...state.ibDeals] }))
+    eventBus.emit('ib.created', { deal })
+  },
 
-  approveIBDeal: (dealId, actor) =>
+  approveIBDeal: (dealId, actor) => {
     set((state) => ({
       ibDeals: state.ibDeals.map((d) => {
         if (d.id !== dealId) return d
@@ -33,9 +37,11 @@ export const useIBStore = create<IBState>((set) => ({
           approvalHistory: [...d.approvalHistory, entry],
         }
       }),
-    })),
+    }))
+    eventBus.emit('ib.approved', { dealId, actor })
+  },
 
-  rejectIBDeal: (dealId, actor, reason) =>
+  rejectIBDeal: (dealId, actor, reason) => {
     set((state) => ({
       ibDeals: state.ibDeals.map((d) => {
         if (d.id !== dealId) return d
@@ -53,9 +59,11 @@ export const useIBStore = create<IBState>((set) => ({
           approvalHistory: [...d.approvalHistory, entry],
         }
       }),
-    })),
+    }))
+    eventBus.emit('ib.rejected', { dealId, actor, reason })
+  },
 
-  resubmitIBDeal: (dealId, updates) =>
+  resubmitIBDeal: (dealId, updates) => {
     set((state) => ({
       ibDeals: state.ibDeals.map((d) => {
         if (d.id !== dealId) return d
@@ -73,5 +81,16 @@ export const useIBStore = create<IBState>((set) => ({
           approvalHistory: [...d.approvalHistory, entry],
         }
       }),
-    })),
+    }))
+    eventBus.emit('ib.resubmitted', { dealId })
+  },
+
+  expireIBDeal: (dealId) => {
+    set((state) => ({
+      ibDeals: state.ibDeals.map((d) =>
+        d.id === dealId ? { ...d, status: 'expired' as IBDealStatus } : d
+      ),
+    }))
+    eventBus.emit('ib.expired', { dealId })
+  },
 }))
