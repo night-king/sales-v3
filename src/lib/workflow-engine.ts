@@ -4,6 +4,7 @@ import { useTaskStore } from '@/store/task-store'
 import { useTicketStore } from '@/store/ticket-store'
 import { useIBStore } from '@/store/ib-store'
 import { useNotificationStore } from '@/store/notification-store'
+import { useAutomationStore } from '@/store/automation-store'
 import { mockUsers } from '@/data/users'
 import type { TaskType } from '@/types/task'
 import type { ClientStatus } from '@/types/client'
@@ -91,6 +92,7 @@ function handleClientStatusChanged({ clientId, from, to }: { clientId: string; f
   }
 
   notify('client', 'Client Status Changed', `${name}: ${from} \u2192 ${to}`, `/client/${clientId}`)
+  evaluateAutomationRules('client.statusChanged', { clientId, from, to })
 }
 
 // --- Workflow 3: Task Chain (task completed -> advance client) ---
@@ -102,7 +104,7 @@ const CLIENT_ADVANCE: Partial<Record<TaskType, ClientStatus>> = {
   reactivation: 'active',
 }
 
-function handleTaskStatusChanged({ taskId: _taskId, from: _from, to, task }: { taskId: string; from: string; to: string; task: any }) {
+function handleTaskStatusChanged({ taskId, from, to, task }: { taskId: string; from: string; to: string; task: any }) {
   const clientName = getClientName(task.clientId)
 
   if (to === 'completed') {
@@ -120,6 +122,8 @@ function handleTaskStatusChanged({ taskId: _taskId, from: _from, to, task }: { t
   if (to === 'failed') {
     notify('task', 'Task Failed', `Task "${task.type}" for ${clientName} has failed.`, `/task/my-tasks`)
   }
+
+  evaluateAutomationRules('task.statusChanged', { taskId, from, to, ...task })
 }
 
 // --- Workflow 4: No-Response Retry ---
@@ -214,6 +218,53 @@ function handleCRMEvent(eventType: string, clientId: string) {
   const newStatus = statusMap[eventType]
   if (newStatus) {
     useClientStore.getState().updateClientStatus(clientId, newStatus)
+  }
+  evaluateAutomationRules(eventType, { clientId })
+}
+
+// --- Automation Rule Evaluation ---
+
+function evaluateAutomationRules(eventType: string, eventData: Record<string, unknown>) {
+  const { rules, addLogEntry } = useAutomationStore.getState()
+  const enabledRules = rules.filter((r) => r.enabled)
+
+  for (const rule of enabledRules) {
+    // Simplified matching: check if any condition group references the event type
+    const matched = rule.conditions.some((group) =>
+      group.conditions.some((cond) => {
+        if (cond.field === 'event.type') return cond.value === eventType
+        if (cond.field === 'client.status') return cond.value === (eventData as any).to || cond.value === (eventData as any).status
+        if (cond.field === 'task.priority') return cond.value === (eventData as any).priority
+        return false
+      })
+    )
+
+    addLogEntry({
+      id: `log-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+      ruleId: rule.id,
+      ruleName: rule.name,
+      event: eventType,
+      result: matched ? 'success' : 'skipped',
+      timestamp: new Date().toISOString(),
+    })
+
+    if (matched) {
+      // Execute rule actions
+      for (const action of rule.actions) {
+        if (action.type === 'create_task' && (eventData as any).clientId) {
+          const clientName = getClientName((eventData as any).clientId)
+          createWorkflowTask({
+            type: (action.config?.taskType as any) ?? 'event_notification',
+            clientId: (eventData as any).clientId,
+            priority: (action.config?.priority as any) ?? 'medium',
+            description: `Auto-created by rule "${rule.name}" for ${clientName}`,
+          })
+        }
+        if (action.type === 'notify_manager') {
+          notify('system', `Automation: ${rule.name}`, `Rule "${rule.name}" triggered by ${eventType}`)
+        }
+      }
+    }
   }
 }
 
