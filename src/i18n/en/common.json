@@ -1,0 +1,227 @@
+{
+  "appName": "Sales Management System",
+  "roles": {
+    "sales": "Sales",
+    "support": "Support",
+    "manager": "Manager",
+    "admin": "Admin"
+  },
+  "roleDescriptions": {
+    "sales": "Acquire new clients, maintain relationships",
+    "support": "Communicate with clients, resolve issues",
+    "manager": "Manage Sales and Support teams",
+    "admin": "System configuration, account management"
+  },
+  "actions": {
+    "claim": "Claim",
+    "release": "Release",
+    "create": "Create",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "approve": "Approve",
+    "reject": "Reject",
+    "escalate": "Escalate",
+    "close": "Close",
+    "reopen": "Reopen",
+    "complete": "Complete",
+    "assign": "Assign",
+    "return": "Return to Pool",
+    "start": "Start Processing",
+    "resolve": "Resolve",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "import": "Import",
+    "refresh": "Refresh",
+    "back": "Back",
+    "viewDetail": "View Detail",
+    "viewAll": "View All",
+    "viewFull": "View Full",
+    "markFailed": "Mark Failed",
+    "markNoResponse": "Mark No Response",
+    "addCall": "Add Call",
+    "sendSMS": "Send SMS",
+    "sendEmail": "Send Email",
+    "createTicket": "Create Ticket",
+    "createTask": "Create Task",
+    "createIBDeal": "Create IB Deal",
+    "resubmit": "Resubmit",
+    "switchRole": "Switch Role",
+    "logout": "Logout",
+    "login": "Login",
+    "send": "Send"
+  },
+  "clientStatus": {
+    "lead": "Lead",
+    "registered": "Registered",
+    "kyc_pending": "KYC Pending",
+    "kyc_rejected": "KYC Rejected",
+    "kyc_approved": "KYC Approved",
+    "funded": "Funded",
+    "active": "Active",
+    "dormant": "Dormant"
+  },
+  "taskStatus": {
+    "pending": "Pending",
+    "in_progress": "In Progress",
+    "completed": "Completed",
+    "failed": "Failed",
+    "no_response": "No Response"
+  },
+  "taskType": {
+    "kyc_followup": "KYC Follow-up",
+    "kyc_rejected": "KYC Resubmission",
+    "deposit_guidance": "Deposit Guidance",
+    "trade_activation": "Trade Activation",
+    "reactivation": "Reactivation",
+    "negative_balance_resolution": "Negative Balance Resolution",
+    "withdrawal_feedback": "Withdrawal Feedback",
+    "event_notification": "Event Notification",
+    "ib_renewal_followup": "IB Renewal Follow-up"
+  },
+  "ticketStatus": {
+    "open": "Open",
+    "in_progress": "In Progress",
+    "on_hold": "On Hold",
+    "resolved": "Resolved",
+    "closed": "Closed"
+  },
+  "ticketCategory": {
+    "general": "General",
+    "account": "Account",
+    "ib_application": "IB Application",
+    "kyc": "KYC",
+    "deposit": "Deposit",
+    "withdrawal": "Withdrawal",
+    "trading": "Trading",
+    "technical": "Technical",
+    "complaint": "Complaint"
+  },
+  "ibDealStatus": {
+    "pending_approval": "Pending Approval",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "active": "Active",
+    "expired": "Expired"
+  },
+  "priority": {
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "urgent": "Urgent"
+  },
+  "userStatus": {
+    "active": "Active",
+    "busy": "Busy",
+    "offline": "Offline"
+  },
+  "channel": {
+    "livechat": "Live Chat",
+    "whatsapp": "WhatsApp",
+    "email": "Email",
+    "phone": "Phone"
+  },
+  "table": {
+    "name": "Name",
+    "status": "Status",
+    "country": "Country",
+    "language": "Language",
+    "phone": "Phone",
+    "email": "Email",
+    "balance": "Balance",
+    "assignedTo": "Assigned To",
+    "createdAt": "Created",
+    "createdBy": "Created By",
+    "dueDate": "Due Date",
+    "priority": "Priority",
+    "type": "Type",
+    "category": "Category",
+    "source": "Source",
+    "channel": "Channel",
+    "client": "Client",
+    "assignee": "Assignee",
+    "actions": "Actions",
+    "tags": "Tags",
+    "description": "Description",
+    "noData": "No data available",
+    "showing": "Showing {{from}}-{{to}} of {{total}}",
+    "rowsPerPage": "Rows per page"
+  },
+  "form": {
+    "required": "Required",
+    "optional": "Optional",
+    "selectPlaceholder": "Select...",
+    "searchPlaceholder": "Search...",
+    "namePlaceholder": "Enter name",
+    "emailPlaceholder": "Enter email",
+    "phonePlaceholder": "Enter phone number",
+    "descriptionPlaceholder": "Enter description",
+    "notesPlaceholder": "Enter notes",
+    "reasonPlaceholder": "Enter reason"
+  },
+  "confirm": {
+    "title": "Confirm",
+    "deleteTitle": "Are you sure?",
+    "deleteMessage": "This action cannot be undone.",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "notification": {
+    "title": "Notifications",
+    "markAllRead": "Mark all as read",
+    "noNotifications": "No notifications",
+    "success": "Success",
+    "error": "Error",
+    "saved": "Saved successfully",
+    "created": "Created successfully",
+    "updated": "Updated successfully",
+    "deleted": "Deleted successfully"
+  },
+  "login": {
+    "title": "Sales Management System",
+    "subtitle": "Select a role to enter the demo",
+    "enterAs": "Enter as {{role}}"
+  },
+  "language": {
+    "en": "English",
+    "zh": "中文"
+  },
+  "time": {
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "daysAgo": "{{count}} days ago",
+    "hoursAgo": "{{count}} hours ago",
+    "minutesAgo": "{{count}} minutes ago",
+    "justNow": "Just now",
+    "overdue": "Overdue",
+    "dueIn": "Due in {{days}} days"
+  },
+  "escalation": {
+    "submitToManager": "Submit to Manager",
+    "forwardToSales": "Forward to Sales",
+    "reason": "Escalation Reason",
+    "notes": "Notes"
+  },
+  "commission": {
+    "perLot": "Per Lot",
+    "percentage": "Percentage",
+    "fixed": "Fixed"
+  },
+  "payment": {
+    "oneTime": "One Time",
+    "monthly": "Monthly",
+    "quarterly": "Quarterly"
+  },
+  "region": {
+    "asia": "Asia",
+    "europe": "Europe",
+    "africa": "Africa",
+    "north_america": "North America",
+    "oceania": "Oceania",
+    "south_america": "South America",
+    "other": "Other"
+  }
+}

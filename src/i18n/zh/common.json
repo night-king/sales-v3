@@ -1,0 +1,227 @@
+{
+  "appName": "客户销售管理系统",
+  "roles": {
+    "sales": "销售",
+    "support": "客服",
+    "manager": "管理",
+    "admin": "管理员"
+  },
+  "roleDescriptions": {
+    "sales": "负责拉新，维护客户关系",
+    "support": "与客户沟通，答疑解惑，解决问题",
+    "manager": "管理Sales，Support团队",
+    "admin": "系统配置，账户分配"
+  },
+  "actions": {
+    "claim": "认领",
+    "release": "释放",
+    "create": "创建",
+    "edit": "编辑",
+    "delete": "删除",
+    "save": "保存",
+    "cancel": "取消",
+    "submit": "提交",
+    "approve": "批准",
+    "reject": "拒绝",
+    "escalate": "升级",
+    "close": "关闭",
+    "reopen": "重新打开",
+    "complete": "完成",
+    "assign": "分配",
+    "return": "退回任务池",
+    "start": "开始处理",
+    "resolve": "解决",
+    "search": "搜索",
+    "filter": "筛选",
+    "export": "导出",
+    "import": "导入",
+    "refresh": "刷新",
+    "back": "返回",
+    "viewDetail": "查看详情",
+    "viewAll": "查看全部",
+    "viewFull": "查看完整",
+    "markFailed": "标记失败",
+    "markNoResponse": "标记无响应",
+    "addCall": "添加通话记录",
+    "sendSMS": "发送短信",
+    "sendEmail": "发送邮件",
+    "createTicket": "创建工单",
+    "createTask": "创建任务",
+    "createIBDeal": "创建IB协议",
+    "resubmit": "重新提交",
+    "switchRole": "切换角色",
+    "logout": "退出",
+    "login": "登录",
+    "send": "发送"
+  },
+  "clientStatus": {
+    "lead": "潜在客户",
+    "registered": "已注册",
+    "kyc_pending": "KYC审核中",
+    "kyc_rejected": "KYC拒绝",
+    "kyc_approved": "KYC通过",
+    "funded": "已入金",
+    "active": "活跃",
+    "dormant": "休眠"
+  },
+  "taskStatus": {
+    "pending": "待处理",
+    "in_progress": "进行中",
+    "completed": "已完成",
+    "failed": "失败",
+    "no_response": "无响应"
+  },
+  "taskType": {
+    "kyc_followup": "KYC跟进",
+    "kyc_rejected": "KYC重提交",
+    "deposit_guidance": "入金引导",
+    "trade_activation": "交易激活",
+    "reactivation": "重新激活",
+    "negative_balance_resolution": "负余额处理",
+    "withdrawal_feedback": "出金反馈",
+    "event_notification": "活动通知",
+    "ib_renewal_followup": "IB续签跟进"
+  },
+  "ticketStatus": {
+    "open": "待处理",
+    "in_progress": "处理中",
+    "on_hold": "挂起",
+    "resolved": "已解决",
+    "closed": "已关闭"
+  },
+  "ticketCategory": {
+    "general": "一般",
+    "account": "账户",
+    "ib_application": "IB申请",
+    "kyc": "KYC",
+    "deposit": "入金",
+    "withdrawal": "出金",
+    "trading": "交易",
+    "technical": "技术",
+    "complaint": "投诉"
+  },
+  "ibDealStatus": {
+    "pending_approval": "待审批",
+    "approved": "已批准",
+    "rejected": "已拒绝",
+    "active": "生效中",
+    "expired": "已过期"
+  },
+  "priority": {
+    "low": "低",
+    "medium": "中",
+    "high": "高",
+    "urgent": "紧急"
+  },
+  "userStatus": {
+    "active": "在线",
+    "busy": "忙碌",
+    "offline": "离线"
+  },
+  "channel": {
+    "livechat": "在线聊天",
+    "whatsapp": "WhatsApp",
+    "email": "邮件",
+    "phone": "电话"
+  },
+  "table": {
+    "name": "姓名",
+    "status": "状态",
+    "country": "国家",
+    "language": "语言",
+    "phone": "电话",
+    "email": "邮箱",
+    "balance": "余额",
+    "assignedTo": "负责人",
+    "createdAt": "创建时间",
+    "createdBy": "创建人",
+    "dueDate": "截止日期",
+    "priority": "优先级",
+    "type": "类型",
+    "category": "分类",
+    "source": "来源",
+    "channel": "渠道",
+    "client": "客户",
+    "assignee": "负责人",
+    "actions": "操作",
+    "tags": "标签",
+    "description": "描述",
+    "noData": "暂无数据",
+    "showing": "显示 {{from}}-{{to}} 共 {{total}} 条",
+    "rowsPerPage": "每页行数"
+  },
+  "form": {
+    "required": "必填",
+    "optional": "选填",
+    "selectPlaceholder": "请选择...",
+    "searchPlaceholder": "搜索...",
+    "namePlaceholder": "请输入姓名",
+    "emailPlaceholder": "请输入邮箱",
+    "phonePlaceholder": "请输入电话号码",
+    "descriptionPlaceholder": "请输入描述",
+    "notesPlaceholder": "请输入备注",
+    "reasonPlaceholder": "请输入原因"
+  },
+  "confirm": {
+    "title": "确认",
+    "deleteTitle": "确定要删除吗？",
+    "deleteMessage": "此操作无法撤销。",
+    "yes": "是",
+    "no": "否"
+  },
+  "notification": {
+    "title": "通知",
+    "markAllRead": "全部标为已读",
+    "noNotifications": "暂无通知",
+    "success": "成功",
+    "error": "错误",
+    "saved": "保存成功",
+    "created": "创建成功",
+    "updated": "更新成功",
+    "deleted": "删除成功"
+  },
+  "login": {
+    "title": "客户销售管理系统",
+    "subtitle": "选择角色进入演示",
+    "enterAs": "以 {{role}} 身份进入"
+  },
+  "language": {
+    "en": "English",
+    "zh": "中文"
+  },
+  "time": {
+    "today": "今天",
+    "yesterday": "昨天",
+    "daysAgo": "{{count}} 天前",
+    "hoursAgo": "{{count}} 小时前",
+    "minutesAgo": "{{count}} 分钟前",
+    "justNow": "刚刚",
+    "overdue": "已逾期",
+    "dueIn": "{{days}} 天后到期"
+  },
+  "escalation": {
+    "submitToManager": "提交给Manager",
+    "forwardToSales": "转交给Sales",
+    "reason": "升级原因",
+    "notes": "备注"
+  },
+  "commission": {
+    "perLot": "每手",
+    "percentage": "百分比",
+    "fixed": "固定金额"
+  },
+  "payment": {
+    "oneTime": "一次性",
+    "monthly": "月度",
+    "quarterly": "季度"
+  },
+  "region": {
+    "asia": "亚洲",
+    "europe": "欧洲",
+    "africa": "非洲",
+    "north_america": "北美洲",
+    "oceania": "大洋洲",
+    "south_america": "南美洲",
+    "other": "其他"
+  }
+}
