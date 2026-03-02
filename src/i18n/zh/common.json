@@ -54,7 +54,9 @@
     "collapse": "收起",
     "expand": "展开",
     "login": "登录",
-    "send": "发送"
+    "send": "发送",
+    "returnToProcessing": "重新处理",
+    "waitingForManager": "等待管理处理"
   },
   "clientStatus": {
     "lead": "潜在客户",

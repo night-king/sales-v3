@@ -54,7 +54,9 @@
     "collapse": "Collapse",
     "expand": "Expand",
     "login": "Login",
-    "send": "Send"
+    "send": "Send",
+    "returnToProcessing": "Return to Processing",
+    "waitingForManager": "Waiting for manager response"
   },
   "clientStatus": {
     "lead": "Lead",

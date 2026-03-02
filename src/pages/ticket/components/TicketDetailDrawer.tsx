@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useTicketStore } from '@/store/ticket-store'
+import { useAuthStore } from '@/store/auth-store'
 import { useClientStore } from '@/store/client-store'
 import { mockUsers } from '@/data/users'
 import { TICKET_CATEGORIES, CHANNELS } from '@/lib/constants'
@@ -29,6 +30,7 @@ export function TicketDetailDrawer({ ticket, open, onOpenChange }: TicketDetailD
   const { t, i18n } = useTranslation()
   const isZh = i18n.language === 'zh'
   const { updateTicketStatus } = useTicketStore()
+  const currentRole = useAuthStore((s) => s.currentRole)
   const clients = useClientStore((s) => s.clients)
 
   const [escalateOpen, setEscalateOpen] = useState(false)
@@ -229,9 +231,23 @@ export function TicketDetailDrawer({ ticket, open, onOpenChange }: TicketDetailD
                 </>
               )}
 
-              {ticket.status === 'on_hold' && (
+              {ticket.status === 'on_hold' && currentRole === 'manager' && (
+                <>
+                  <Button onClick={handleStartProcessing} className="flex-1">
+                    {t('actions.returnToProcessing')}
+                  </Button>
+                  <Button onClick={handleResolve} className="flex-1">
+                    {t('actions.resolve')}
+                  </Button>
+                  <Button variant="destructive" onClick={handleClose} className="flex-1">
+                    {t('actions.close')}
+                  </Button>
+                </>
+              )}
+
+              {ticket.status === 'on_hold' && currentRole !== 'manager' && (
                 <p className="text-sm text-muted-foreground w-full text-center py-2">
-                  {isZh ? '等待升级响应中' : 'Waiting for escalation response'}
+                  {t('actions.waitingForManager')}
                 </p>
               )}
 
