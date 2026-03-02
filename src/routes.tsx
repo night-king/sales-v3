@@ -2,6 +2,13 @@ import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { AppLayout } from '@/components/layout/AppLayout'
 import LoginPage from '@/pages/login/LoginPage'
 import DashboardPage from '@/pages/dashboard/DashboardPage'
+import PublicPoolPage from '@/pages/client/PublicPoolPage'
+import ClientsPage from '@/pages/client/ClientsPage'
+import MyClientsPage from '@/pages/client/MyClientsPage'
+import ClientDetailPage from '@/pages/client/ClientDetailPage'
+import MyTasksPage from '@/pages/task/MyTasksPage'
+import TaskPoolPage from '@/pages/task/TaskPoolPage'
+import AllTasksPage from '@/pages/task/AllTasksPage'
 
 // Placeholder page component
 function Placeholder({ title }: { title: string }) {
@@ -27,14 +34,14 @@ export const router = createBrowserRouter([
       { index: true, element: <Navigate to="/dashboard" replace /> },
       { path: 'dashboard', element: <DashboardPage /> },
       // Client
-      { path: 'client/public-pool', element: <Placeholder title="Public Pool" /> },
-      { path: 'client/list', element: <Placeholder title="Client List" /> },
-      { path: 'client/my-clients', element: <Placeholder title="My Clients" /> },
-      { path: 'client/:id', element: <Placeholder title="Client Detail" /> },
+      { path: 'client/public-pool', element: <PublicPoolPage /> },
+      { path: 'client/list', element: <ClientsPage /> },
+      { path: 'client/my-clients', element: <MyClientsPage /> },
+      { path: 'client/:id', element: <ClientDetailPage /> },
       // Task
-      { path: 'task/my-tasks', element: <Placeholder title="My Tasks" /> },
-      { path: 'task/pool', element: <Placeholder title="Task Pool" /> },
-      { path: 'task/all', element: <Placeholder title="All Tasks" /> },
+      { path: 'task/my-tasks', element: <MyTasksPage /> },
+      { path: 'task/pool', element: <TaskPoolPage /> },
+      { path: 'task/all', element: <AllTasksPage /> },
       // Ticket
       { path: 'ticket/my-tickets', element: <Placeholder title="My Tickets" /> },
       { path: 'ticket/all', element: <Placeholder title="All Tickets" /> },
