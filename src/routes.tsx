@@ -9,18 +9,22 @@ import ClientDetailPage from '@/pages/client/ClientDetailPage'
 import MyTasksPage from '@/pages/task/MyTasksPage'
 import TaskPoolPage from '@/pages/task/TaskPoolPage'
 import AllTasksPage from '@/pages/task/AllTasksPage'
-
-// Placeholder page component
-function Placeholder({ title }: { title: string }) {
-  return (
-    <div className="flex items-center justify-center h-64">
-      <div className="text-center">
-        <h2 className="text-xl font-semibold text-foreground">{title}</h2>
-        <p className="text-muted-foreground mt-1 text-sm">Coming soon...</p>
-      </div>
-    </div>
-  )
-}
+import MyTicketsPage from '@/pages/ticket/MyTicketsPage'
+import AllTicketsPage from '@/pages/ticket/AllTicketsPage'
+import MyIBDealsPage from '@/pages/ib/MyIBDealsPage'
+import PendingApprovalPage from '@/pages/ib/PendingApprovalPage'
+import AllIBDealsPage from '@/pages/ib/AllIBDealsPage'
+import CommunicationPage from '@/pages/communication/CommunicationPage'
+import TeamMembersPage from '@/pages/team/TeamMembersPage'
+import GroupsPage from '@/pages/team/GroupsPage'
+import AutomationPage from '@/pages/automation/AutomationPage'
+import MyPerformancePage from '@/pages/performance/MyPerformancePage'
+import TeamPerformancePage from '@/pages/performance/TeamPerformancePage'
+import UserListPage from '@/pages/user/UserListPage'
+import RoleListPage from '@/pages/role/RoleListPage'
+import SystemSettingsPage from '@/pages/settings/SystemSettingsPage'
+import SystemMonitoringPage from '@/pages/monitoring/SystemMonitoringPage'
+import UserProfilePage from '@/pages/profile/UserProfilePage'
 
 export const router = createBrowserRouter([
   {
@@ -43,29 +47,29 @@ export const router = createBrowserRouter([
       { path: 'task/pool', element: <TaskPoolPage /> },
       { path: 'task/all', element: <AllTasksPage /> },
       // Ticket
-      { path: 'ticket/my-tickets', element: <Placeholder title="My Tickets" /> },
-      { path: 'ticket/all', element: <Placeholder title="All Tickets" /> },
+      { path: 'ticket/my-tickets', element: <MyTicketsPage /> },
+      { path: 'ticket/all', element: <AllTicketsPage /> },
       // IB
-      { path: 'ib/my-deals', element: <Placeholder title="My IB Deals" /> },
-      { path: 'ib/pending', element: <Placeholder title="Pending Approval" /> },
-      { path: 'ib/all', element: <Placeholder title="All IB Deals" /> },
+      { path: 'ib/my-deals', element: <MyIBDealsPage /> },
+      { path: 'ib/pending', element: <PendingApprovalPage /> },
+      { path: 'ib/all', element: <AllIBDealsPage /> },
       // Communication
-      { path: 'communication', element: <Placeholder title="Communication Center" /> },
+      { path: 'communication', element: <CommunicationPage /> },
       // Team
-      { path: 'team/members', element: <Placeholder title="Team Members" /> },
-      { path: 'team/groups', element: <Placeholder title="Groups" /> },
+      { path: 'team/members', element: <TeamMembersPage /> },
+      { path: 'team/groups', element: <GroupsPage /> },
       // Automation
-      { path: 'automation', element: <Placeholder title="Automation Rules" /> },
+      { path: 'automation', element: <AutomationPage /> },
       // Performance
-      { path: 'performance/my', element: <Placeholder title="My Performance" /> },
-      { path: 'performance/team', element: <Placeholder title="Team Performance" /> },
+      { path: 'performance/my', element: <MyPerformancePage /> },
+      { path: 'performance/team', element: <TeamPerformancePage /> },
       // Admin
-      { path: 'user/list', element: <Placeholder title="User Management" /> },
-      { path: 'role/list', element: <Placeholder title="Role Management" /> },
-      { path: 'settings', element: <Placeholder title="System Settings" /> },
-      { path: 'monitoring', element: <Placeholder title="System Monitoring" /> },
+      { path: 'user/list', element: <UserListPage /> },
+      { path: 'role/list', element: <RoleListPage /> },
+      { path: 'settings', element: <SystemSettingsPage /> },
+      { path: 'monitoring', element: <SystemMonitoringPage /> },
       // Profile
-      { path: 'profile', element: <Placeholder title="User Profile" /> },
+      { path: 'profile', element: <UserProfilePage /> },
     ],
   },
 ])
