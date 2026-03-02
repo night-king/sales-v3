@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useClientStore } from '@/store/client-store'
@@ -9,15 +10,36 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { ArrowLeft } from 'lucide-react'
 
+const STATUS_TRANSITIONS: Record<string, string[]> = {
+  lead: ['registered'],
+  registered: ['kyc_pending'],
+  kyc_pending: ['kyc_approved', 'kyc_rejected'],
+  kyc_rejected: ['kyc_pending'],
+  kyc_approved: ['funded'],
+  funded: ['active'],
+  active: ['dormant'],
+  dormant: ['active'],
+}
+
 export default function ClientDetailPage() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const isZh = i18n.language === 'zh'
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
   const clients = useClientStore((s) => s.clients)
+  const updateClientStatus = useClientStore((s) => s.updateClientStatus)
   const tasks = useTaskStore((s) => s.tasks)
   const tickets = useTicketStore((s) => s.tickets)
+  const [selectedStatus, setSelectedStatus] = useState<string>('')
 
   const client = clients.find((c) => c.id === id)
 
@@ -194,6 +216,44 @@ export default function ClientDetailPage() {
           </div>
         </TabsContent>
       </Tabs>
+
+      {/* Simulate Status Change */}
+      {STATUS_TRANSITIONS[client.status] && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">
+              {isZh ? '模拟状态变更' : 'Simulate Status Change'}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center gap-3">
+              <Select value={selectedStatus} onValueChange={setSelectedStatus}>
+                <SelectTrigger className="w-[240px]">
+                  <SelectValue placeholder={isZh ? '选择目标状态' : 'Select target status'} />
+                </SelectTrigger>
+                <SelectContent>
+                  {STATUS_TRANSITIONS[client.status].map((status) => (
+                    <SelectItem key={status} value={status}>
+                      {t(`clientStatus.${status}`)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Button
+                disabled={!selectedStatus}
+                onClick={() => {
+                  if (selectedStatus && id) {
+                    updateClientStatus(id, selectedStatus as Parameters<typeof updateClientStatus>[1])
+                    setSelectedStatus('')
+                  }
+                }}
+              >
+                {isZh ? '应用' : 'Apply'}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   )
 }
