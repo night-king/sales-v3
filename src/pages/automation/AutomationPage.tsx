@@ -10,6 +10,7 @@ import { Switch } from '@/components/ui/switch'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {
   Dialog,
   DialogContent,
@@ -39,7 +40,7 @@ const TRIGGER_COLORS: Record<string, string> = {
 export default function AutomationPage() {
   const { t, i18n } = useTranslation()
   const isZh = i18n.language === 'zh'
-  const { rules, toggleRule, createRule } = useAutomationStore()
+  const { rules, toggleRule, createRule, executionLog } = useAutomationStore()
   const currentRole = useAuthStore((s) => s.currentRole)
   const isManager = currentRole === 'manager' || currentRole === 'admin'
 
@@ -209,12 +210,87 @@ export default function AutomationPage() {
           ) : undefined
         }
       />
-      <DataTable
-        columns={columns}
-        data={rules}
-        searchColumn="name"
-        searchPlaceholder={t('actions.search')}
-      />
+
+      <Tabs defaultValue="rules" className="mt-4">
+        <TabsList>
+          <TabsTrigger value="rules">
+            {isZh ? '规则' : 'Rules'}
+          </TabsTrigger>
+          <TabsTrigger value="log">
+            {isZh ? '执行日志' : 'Execution Log'}
+            {executionLog.length > 0 && (
+              <Badge variant="secondary" className="ml-2 text-xs">
+                {executionLog.length}
+              </Badge>
+            )}
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="rules">
+          <DataTable
+            columns={columns}
+            data={rules}
+            searchColumn="name"
+            searchPlaceholder={t('actions.search')}
+          />
+        </TabsContent>
+
+        <TabsContent value="log">
+          {executionLog.length === 0 ? (
+            <div className="flex items-center justify-center py-12 text-muted-foreground">
+              {isZh
+                ? '暂无执行记录。触发CRM事件以执行自动化规则。'
+                : 'No executions yet. Fire a CRM event to trigger automation rules.'}
+            </div>
+          ) : (
+            <div className="rounded-md border">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b bg-muted/50">
+                    <th className="px-4 py-3 text-left font-medium">
+                      {isZh ? '时间' : 'Timestamp'}
+                    </th>
+                    <th className="px-4 py-3 text-left font-medium">
+                      {isZh ? '规则名称' : 'Rule Name'}
+                    </th>
+                    <th className="px-4 py-3 text-left font-medium">
+                      {isZh ? '事件' : 'Event'}
+                    </th>
+                    <th className="px-4 py-3 text-left font-medium">
+                      {isZh ? '结果' : 'Result'}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {executionLog.map((entry) => (
+                    <tr key={entry.id} className="border-b last:border-0">
+                      <td className="px-4 py-3 text-muted-foreground">
+                        {new Date(entry.timestamp).toLocaleString()}
+                      </td>
+                      <td className="px-4 py-3 font-medium">{entry.ruleName}</td>
+                      <td className="px-4 py-3">{entry.event}</td>
+                      <td className="px-4 py-3">
+                        <Badge
+                          variant={entry.result === 'success' ? 'default' : 'secondary'}
+                          className={
+                            entry.result === 'success'
+                              ? 'bg-green-100 text-green-700 border-0'
+                              : 'bg-gray-100 text-gray-600 border-0'
+                          }
+                        >
+                          {entry.result === 'success'
+                            ? (isZh ? '成功' : 'Success')
+                            : (isZh ? '跳过' : 'Skipped')}
+                        </Badge>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }
