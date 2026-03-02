@@ -227,5 +227,30 @@
     "oceania": "Oceania",
     "south_america": "South America",
     "other": "Other"
+  },
+  "dashboard": {
+    "pendingTasks": "Pending Tasks",
+    "inProgressTasks": "In Progress",
+    "completedTasks": "Completed",
+    "myClients": "My Clients",
+    "openTickets": "Open Tickets",
+    "inProgressTickets": "In Progress",
+    "resolvedTickets": "Resolved",
+    "pendingConversations": "Pending Conversations",
+    "totalClients": "Total Clients",
+    "activeClients": "Active Clients",
+    "pendingIB": "Pending IB Approvals",
+    "teamMembers": "Team Members",
+    "activeRules": "Active Rules",
+    "clientLifecycle": "Client Lifecycle Distribution",
+    "teamOverview": "Team Performance Overview",
+    "newClients": "New Clients",
+    "conversionRate": "Conversion Rate",
+    "ticketCount": "Ticket Count",
+    "resolutionRate": "Resolution Rate",
+    "totalUsers": "Total Users",
+    "systemHealth": "System Health",
+    "healthy": "Healthy",
+    "deadLetterQueue": "Dead Letter Queue"
   }
 }

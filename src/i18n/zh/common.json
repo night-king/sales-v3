@@ -227,5 +227,30 @@
     "oceania": "大洋洲",
     "south_america": "南美洲",
     "other": "其他"
+  },
+  "dashboard": {
+    "pendingTasks": "待处理任务",
+    "inProgressTasks": "进行中",
+    "completedTasks": "已完成",
+    "myClients": "我的客户",
+    "openTickets": "待处理工单",
+    "inProgressTickets": "处理中",
+    "resolvedTickets": "已解决",
+    "pendingConversations": "待处理会话",
+    "totalClients": "总客户数",
+    "activeClients": "活跃客户",
+    "pendingIB": "待审批IB",
+    "teamMembers": "团队成员",
+    "activeRules": "活跃规则",
+    "clientLifecycle": "客户生命周期分布",
+    "teamOverview": "团队绩效概览",
+    "newClients": "新客户",
+    "conversionRate": "转化率",
+    "ticketCount": "工单数量",
+    "resolutionRate": "解决率",
+    "totalUsers": "总用户数",
+    "systemHealth": "系统健康",
+    "healthy": "正常",
+    "deadLetterQueue": "死信队列"
   }
 }

@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { AppLayout } from '@/components/layout/AppLayout'
 import LoginPage from '@/pages/login/LoginPage'
+import DashboardPage from '@/pages/dashboard/DashboardPage'
 
 // Placeholder page component
 function Placeholder({ title }: { title: string }) {
@@ -24,7 +25,7 @@ export const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       { index: true, element: <Navigate to="/dashboard" replace /> },
-      { path: 'dashboard', element: <Placeholder title="Dashboard" /> },
+      { path: 'dashboard', element: <DashboardPage /> },
       // Client
       { path: 'client/public-pool', element: <Placeholder title="Public Pool" /> },
       { path: 'client/list', element: <Placeholder title="Client List" /> },
