@@ -1,8 +1,10 @@
 import { useTranslation } from 'react-i18next'
 import { useClientStore } from '@/store/client-store'
+import { useIBStore } from '@/store/ib-store'
 import { mockUsers } from '@/data/users'
 import { StatusBadge } from '@/components/common/StatusBadge'
 import { TimelineList, type TimelineEntry } from '@/components/common/TimelineList'
+import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -35,6 +37,7 @@ export function IBDealDetailDrawer({ deal, open, onOpenChange }: IBDealDetailDra
   const { t, i18n } = useTranslation()
   const isZh = i18n.language === 'zh'
   const clients = useClientStore((s) => s.clients)
+  const expireIBDeal = useIBStore((s) => s.expireIBDeal)
 
   if (!deal) return null
 
@@ -199,6 +202,25 @@ export function IBDealDetailDrawer({ deal, open, onOpenChange }: IBDealDetailDra
               </p>
             )}
           </div>
+
+          {/* Simulate Expiration */}
+          {(deal.status === 'active' || deal.status === 'approved') && (
+            <>
+              <Separator />
+              <div>
+                <Button
+                  variant="destructive"
+                  className="w-full"
+                  onClick={() => {
+                    expireIBDeal(deal.id)
+                    onOpenChange(false)
+                  }}
+                >
+                  {isZh ? '模拟到期' : 'Simulate Expiration'}
+                </Button>
+              </div>
+            </>
+          )}
         </div>
       </SheetContent>
     </Sheet>
