@@ -6,8 +6,11 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { Send } from 'lucide-react'
+import { Send, TicketPlus, Check } from 'lucide-react'
+import { useTicketStore } from '@/store/ticket-store'
+import { useAuthStore } from '@/store/auth-store'
 import type { Conversation, Message } from '@/data/communications'
+import type { Ticket } from '@/types/ticket'
 
 interface ChatAreaProps {
   conversation: Conversation | null
@@ -15,10 +18,14 @@ interface ChatAreaProps {
 }
 
 export function ChatArea({ conversation, onSendMessage }: ChatAreaProps) {
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation()
   const isZh = i18n.language === 'zh'
   const [inputValue, setInputValue] = useState('')
+  const [ticketCreated, setTicketCreated] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  const createTicket = useTicketStore((s) => s.createTicket)
+  const currentUser = useAuthStore((s) => s.currentUser)
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -55,6 +62,30 @@ export function ChatArea({ conversation, onSendMessage }: ChatAreaProps) {
       e.preventDefault()
       handleSend()
     }
+  }
+
+  const handleCreateTicket = () => {
+    if (!currentUser) return
+
+    const ticket: Ticket = {
+      id: `ticket-chat-${Date.now()}`,
+      source: 'internal_created',
+      channel: 'livechat',
+      category: 'general',
+      priority: 'medium',
+      status: 'open',
+      content: `Ticket created from conversation`,
+      clientId: conversation.clientId,
+      createdBy: currentUser.id,
+      assignedTo: currentUser.id,
+      createdAt: new Date().toISOString(),
+      escalationHistory: [],
+      history: [],
+    }
+
+    createTicket(ticket)
+    setTicketCreated(true)
+    setTimeout(() => setTicketCreated(false), 2000)
   }
 
   const formatMessageTime = (timestamp: string) => {
@@ -113,6 +144,25 @@ export function ChatArea({ conversation, onSendMessage }: ChatAreaProps) {
           placeholder={isZh ? '输入消息...' : 'Type a message...'}
           className="flex-1"
         />
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={handleCreateTicket}
+          disabled={ticketCreated}
+          className="shrink-0 gap-1.5"
+        >
+          {ticketCreated ? (
+            <>
+              <Check className="h-4 w-4" />
+              {isZh ? '已创建' : 'Created!'}
+            </>
+          ) : (
+            <>
+              <TicketPlus className="h-4 w-4" />
+              {t('actions.createTicket')}
+            </>
+          )}
+        </Button>
         <Button size="icon" onClick={handleSend} disabled={!inputValue.trim()}>
           <Send className="h-4 w-4" />
         </Button>
